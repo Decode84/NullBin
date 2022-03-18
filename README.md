@@ -30,7 +30,7 @@ composer install
 Edit the `.env` file and set the newly created database, after you have re-named.
 
 ```shell
-mv .env.example .env
+cp .env.example .env
 ```
 
 Generate a new `APP_KEY` for your project.
