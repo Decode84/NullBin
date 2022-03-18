@@ -11,6 +11,8 @@ The general purpose of the website is to offer an alternative to pastebin. With 
 
 The choice for open-source is to be transparent with how the data is processed and how the service is set up. This is to reassure those who might want to use the service or offer code for the project themselves.
 
+![The website](https://i.imgur.com/edyQJT6.png "site")
+
 ## Installation and usage
 
 Clone the git down to your desired folder.
