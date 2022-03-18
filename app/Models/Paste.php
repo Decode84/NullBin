@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Model;
 
 class Paste extends Model
 {
     public $incrementing = false;
-
-    protected $dates = ['expiration'];
 
     protected $fillable = [
         'title',
@@ -17,6 +16,10 @@ class Paste extends Model
         'url',
         'expiration',
         'content',
+    ];
+
+    protected $dates = [
+        'expiration',
     ];
 
      /**

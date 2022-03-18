@@ -8,13 +8,13 @@
                         <div class="grid grid-cols-4 gap-4">
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">Author</label>
-                                <input type="text" name="author" placeholder="anon"
+                                <input type="text" name="author" placeholder="anon (Optional)"
                                     class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                             </div>
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">Paste Title</label>
-                                <input type="text" name="title" placeholder="bS65cRAuKN"
+                                <input type="text" name="title" placeholder="bS65cRAuKN (Optional)"
                                     class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                             </div>
 
@@ -47,13 +47,6 @@
                         <label class="block text-sm font-medium text-gray-700">Your paste</label>
                         <div class="mt-1">
                             <textarea rows="15" name="content" required="required" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"></textarea>
-                        </div>
-                        <div class="py-2">
-                            <label class="block text-sm font-medium text-gray-700">Password</label>
-                            <div class="flex items-center">
-                                <input type="text" name="password"
-                                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                            </div>
                         </div>
                         <div class="py-4">
                             <button type="submit"
