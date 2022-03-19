@@ -15,6 +15,7 @@ class LanguageTableSeeder extends Seeder
     public function run()
     {
         $arr = array(
+            'text',
             'php',
             'rust',
             'c-sharp',

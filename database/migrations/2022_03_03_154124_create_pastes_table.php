@@ -21,7 +21,6 @@ return new class extends Migration
             $table->dateTime('expiration');
             $table->text('content');
             $table->uuid('url')->unique();
-            // $table->integer('visits')->default(0);
             $table->timestamps();
         });
     }

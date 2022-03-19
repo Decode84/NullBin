@@ -6,9 +6,14 @@ use Carbon\Carbon;
 use App\Models\Paste;
 use App\Models\Language;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\PasteRequest;
+use Illuminate\Encryption\Encrypter;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
 
-class PasteController extends Controller
+class PasteController
 {
     public function create()
     {
@@ -23,12 +28,13 @@ class PasteController extends Controller
 
     public function show(Paste $paste)
     {
+        Session::get('key');
+        Session::get('decrypt');
+
         if($paste->expiration <= Carbon::now())
         {
             abort(404);
         }
-
-        // $paste->increment('visits');
 
         return view('pastes.show', [
             'paste' => $paste
@@ -58,16 +64,48 @@ class PasteController extends Controller
                 break;
         }
 
+        // Random generate a key
+        $key = random_bytes(32);
+
+        // Get the cipher
+        $encrypter = new Encrypter($key, 'AES-256-CBC');
+
+        // Encrypt the original plaintext
+        $encrypted_content = $encrypter->encryptString($request->content);
+
         $paste = Paste::create([
-            'title' => $request->input('title') ?: Str::random(10),
-            'author' => $request->input('author') ?: 'anon',
-            'language' => $request->language,
-            'expiration' => $expiration,
-            'content' => $request->content,
-            'created_at' => Carbon::now(),
-            'url' => Str::uuid(),
+            'title'             => $request->input('title') ?? Str::random(10),
+            'author'            => $request->input('author') ?? 'anon',
+            'language'          => $request->language,
+            'expiration'        => $expiration,
+            'content'           => $encrypted_content,
+            'created_at'        => Carbon::now(),
+            'url'               => Str::uuid(),
         ]);
 
-        return redirect($paste->path());
+        // Display the key in hexadecimal format in the session
+        $key2 = bin2hex($key);
+
+        // Redirect to the path with key in a session
+        return redirect($paste->path())->with(['key' => $key2]);
+    }
+
+    public function decrypt(Paste $paste, Request $request)
+    {
+        // Get the content
+        $encrypted_content = $request->content;
+
+        // Get key
+        $key = $request->key;
+        $key2 = hex2bin($key);
+
+        // Create the encrypter
+        $encrypter = new Encrypter($key2, 'AES-256-CBC');
+
+        // Decrypt the content
+        $decrypted_content = $encrypter->decryptString($encrypted_content);
+
+        // Return the decrypt result in the session
+        return Redirect::back()->with(['decrypt' => $decrypted_content]);
     }
 }
