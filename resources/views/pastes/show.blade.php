@@ -7,55 +7,54 @@
                 <span class="font-medium">This is your decryption key: </span>{{ session()->get('key') }}
             </div>
             @endif
-            @if (session('decrypt'))
-            <div class="p-4 mb-4 text-sm text-gray-700 bg-gray-100 rounded-lg dark:bg-gray-700 dark:text-gray-300"
-                role="alert">
-                <span class="font-medium">This is your decryption key: </span>{{ session()->get('decrypt') }}
-            </div>
-            @endif
-            <div class="bg-white overflow-hidden shadow-lg rounded-lg">
-                <div class="px-4 py-5 sm:px-6">
-                    <div class="grid grid-cols-4 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Author</label>
-                            <input readonly="read" type="text" placeholder="{{ $paste->author }}"
-                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                        </div>
+            <form action="{{ route('paste.decrypt', $paste->url) }}" method="POST">
+                @method('patch')
+                @csrf
+                <div class="bg-white overflow-hidden shadow-lg rounded-lg">
+                    <div class="px-4 py-5 sm:px-6">
+                        <div class="grid grid-cols-4 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Author</label>
+                                <input readonly="read" type="text" placeholder="{{ $paste->author }}"
+                                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            </div>
 
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Paste Title</label>
-                            <input readonly="read" type="text" placeholder="{{ $paste->title }}"
-                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                        </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Paste Title</label>
+                                <input readonly="read" type="text" placeholder="{{ $paste->title }}"
+                                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            </div>
 
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Language</label>
-                            <input readonly="read" type="text" placeholder="{{ $paste->language }}"
-                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                        </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Language</label>
+                                <input readonly="read" type="text" placeholder="{{ $paste->language }}"
+                                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            </div>
 
-                        <div>
-                            <label for="location" class="block text-sm font-medium text-gray-700">Expiration</label>
-                            <input readonly="read" type="text" placeholder="{{ $paste->expiration->diffForHumans() }}"
-                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                        </div>
+                            <div>
+                                <label for="location" class="block text-sm font-medium text-gray-700">Expiration</label>
+                                <input readonly="read" type="text" placeholder=""
+                                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            </div>
 
+                        </div>
                     </div>
-                </div>
-                <div class="bg-gray-50 px-4 py-5 sm:p-6">
-                    <label class="block text-sm font-medium text-gray-700">Your paste</label>
-                    <div class="mt-1">
-                        <textarea readonly="read" rows="15"
-                            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">{{ $paste->content }}</textarea>
-                    </div>
-                    <form action="{{ route('paste.decrypt', $paste) }}" method="post">
-                        @csrf
+                    <div class="bg-gray-50 px-4 py-5 sm:p-6">
+                        <label class="block text-sm font-medium text-gray-700">Your paste</label>
+                        <div class="mt-1">
+                            @if (session('decrypt'))
+                            <textarea name="content" readonly="read" rows="15"
+                                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">{{ session()->get('decrypt') }}</textarea>
+                            @else
+                            <textarea name="content" readonly="read" rows="15"
+                                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">{{ $paste->content }}</textarea>
+                            @endif
+                        </div>
                         <div class="py-2">
                             <label for="key" class="block text-sm font-medium text-gray-700">Key</label>
                             <div class="flex items-center">
-                                <input type="key" name="key"
-                                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                            </div>
+                                <input name="key" type="password"
+                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">                            </div>
                         </div>
                         <div class="py-4">
                             <button type="submit"
@@ -69,9 +68,9 @@
                                 </svg>
                             </button>
                         </div>
-                    </form>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </x-app-layout>

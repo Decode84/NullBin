@@ -7,9 +7,11 @@ use App\Models\Paste;
 use App\Models\Language;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\PasteRequest;
 use Illuminate\Encryption\Encrypter;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
 
 class PasteController
 {
@@ -63,8 +65,7 @@ class PasteController
         }
 
         // Random generate a key
-        // $key = random_bytes(32);
-        $key = "FEmB3U7p9Dt2br7XqKdXU9H7cK2hAary";
+        $key = random_bytes(32);
 
         // Get the cipher
         $encrypter = new Encrypter($key, 'AES-256-CBC');
@@ -82,7 +83,7 @@ class PasteController
             'url'               => Str::uuid(),
         ]);
 
-        // Convert the binary into hexadecimal
+        // Display the key in hexadecimal format in the session
         $key2 = bin2hex($key);
 
         // Redirect to the path with key in a session
@@ -91,14 +92,20 @@ class PasteController
 
     public function decrypt(Paste $paste, Request $request)
     {
-        // Get Content && Key
-        $key = "FEmB3U7p9Dt2br7XqKdXU9H7cK2hAary";
+        // Get the content
+        $encrypted_content = $request->content;
 
-        $decrypted = decrypt($request->content);
+        // Get key
+        $key = $request->key;
+        $key2 = hex2bin($key);
+
+        // Create the encrypter
+        $encrypter = new Encrypter($key2, 'AES-256-CBC');
+
+        // Decrypt the content
+        $decrypted_content = $encrypter->decryptString($encrypted_content);
 
         // Return the decrypt result in the session
-        return view('pastes.show', [
-            'paste' => $paste
-        ]);
+        return Redirect::back()->with(['decrypt' => $decrypted_content]);
     }
 }

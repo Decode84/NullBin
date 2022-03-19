@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Paste extends Model
 {
-    public $incrementing = false;
+    protected $table = 'pastes';
 
     protected $fillable = [
         'title',
