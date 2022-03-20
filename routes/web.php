@@ -15,6 +15,9 @@ Route::post('register', [RegistrationController::class, 'store'])->name('auth.st
 
 Route::post('logout', [AuthenticationController::class, 'destroy'])->name('auth.logout');
 
+
+Route::get('/u/{user}', [ProfileController::class, 'show'])->name('profile.show');
+
 // Paste
 Route::controller(PasteController::class)->group(function () {
     Route::get('/', 'create')->name('paste.create');
