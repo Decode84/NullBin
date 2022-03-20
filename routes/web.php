@@ -18,6 +18,9 @@ Route::post('logout', [AuthenticationController::class, 'destroy'])->name('auth.
 
 Route::get('/u/{user}', [ProfileController::class, 'show'])->name('profile.show');
 
+// Generic sites
+Route::get('about', [PageController::class, 'about'])->name('page.about');
+
 // Paste
 Route::controller(PasteController::class)->group(function () {
     Route::get('/', 'create')->name('paste.create');
@@ -25,6 +28,3 @@ Route::controller(PasteController::class)->group(function () {
     Route::get('{paste}', 'show')->name('paste.show');
     Route::post('paste-decrypt', 'decrypt')->name('paste.decrypt');
 });
-
-// Generic sites
-Route::get('about', [PageController::class, 'about'])->name('page.about');
