@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Model;
 
 class Paste extends Model
 {
-    protected $table = 'pastes';
+    const ACCESS_PULBIC = 'public';
+    const ACCESS_UNLISTED = 'unlisted';
+    const ACCESS_PRIVATE = 'private';
 
     protected $fillable = [
         'title',
@@ -16,6 +17,7 @@ class Paste extends Model
         'url',
         'expiration',
         'content',
+        'user_id',
     ];
 
     protected $dates = [
@@ -40,6 +42,30 @@ class Paste extends Model
     public function path()
     {
         return "/{$this->url}/";
+    }
+
+    static public function accessStates()
+    {
+        return [
+            self::ACCESS_PULBIC,
+            self::ACCESS_UNLISTED,
+            self::ACCESS_PRIVATE
+        ];
+    }
+
+    public function scopePublic($query)
+    {
+        return $query->where('access', self::ACCESS_PULBIC);
+    }
+
+    /**
+     * Get the user that owns the Paste
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     /**

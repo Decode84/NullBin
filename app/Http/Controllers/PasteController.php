@@ -6,11 +6,12 @@ use Carbon\Carbon;
 use App\Models\Paste;
 use App\Models\Language;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use Illuminate\Encryption\Encrypter;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\StorePasteRequest;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\DecryptPasteRequest;
 
 class PasteController
 {
@@ -41,7 +42,13 @@ class PasteController
     public function show(Paste $paste)
     {
         Session::get('key');
-        Session::get('decrypt');
+
+        /*
+        if($paste->access == Paste::ACCESS_PRIVATE)
+        {
+            abort(404);
+        }
+        */
 
         if($paste->expiration <= Carbon::now())
         {
@@ -93,6 +100,8 @@ class PasteController
             'content'           => $encrypted_content,
             'created_at'        => Carbon::now(),
             'url'               => Str::uuid(),
+            'user_id'           => Auth::user()->id ?? '1', // 1 = anon account
+            // 'access'            => $request->input(['access']),
         ]);
 
         // Display the key in hexadecimal format in the session
@@ -102,7 +111,7 @@ class PasteController
         return redirect($paste->path())->with(['key' => $key2]);
     }
 
-    public function decrypt(Paste $paste, Request $request)
+    public function decrypt(Paste $paste, DecryptPasteRequest $request)
     {
         // Get the content
         $encrypted_content = $request->content;
@@ -117,7 +126,11 @@ class PasteController
         // Decrypt the content
         $decrypted_content = $encrypter->decryptString($encrypted_content);
 
+        // Error validation if cannot decrypt.
+
         // Return the decrypt result in the session
-        return Redirect::back()->with(['decrypt' => $decrypted_content]);
+        return Redirect::back()->with([
+            'decrypt' => $decrypted_content,
+        ]);
     }
 }

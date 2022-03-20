@@ -21,8 +21,14 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
+            'username' => 'anon',
+            'password' => Hash::make('anon'),
+            'created_at' => now(),
+        ]);
+
+        DB::table('users')->insert([
             'username' => 'kb885',
-            'password' => Hash::make(1234),
+            'password' => Hash::make('1234'),
             'created_at' => now(),
         ]);
     }
