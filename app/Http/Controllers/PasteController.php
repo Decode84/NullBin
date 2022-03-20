@@ -7,10 +7,9 @@ use App\Models\Paste;
 use App\Models\Language;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Http\Requests\PasteRequest;
 use Illuminate\Encryption\Encrypter;
 use Illuminate\Support\Facades\Session;
+use App\Http\Requests\StorePasteRequest;
 use Illuminate\Support\Facades\Redirect;
 
 class PasteController
@@ -41,7 +40,7 @@ class PasteController
         ]);
     }
 
-    public function store(PasteRequest $request)
+    public function store(StorePasteRequest $request)
     {
         switch ($request->input('expire')) {
             case '5':

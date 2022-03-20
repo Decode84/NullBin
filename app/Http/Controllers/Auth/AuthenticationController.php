@@ -32,18 +32,17 @@ class AuthenticationController extends Controller
 
         if(Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            
-            return redirect()->intended('paste.create');
+            return redirect(route('paste.create'));
         }
 
         return back();
     }
 
-    public function destory(Request $request)
+    public function destroy(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();
-        $request->session()->regenerateToken()();
-        return redirect('paste.create');
+        $request->session()->regenerateToken();
+        return redirect(route('paste.create'));
     }
 }
