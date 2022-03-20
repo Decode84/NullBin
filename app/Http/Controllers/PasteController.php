@@ -14,6 +14,19 @@ use Illuminate\Support\Facades\Redirect;
 
 class PasteController
 {
+    public function index()
+    {
+        $pastes = Paste::query()
+            ->where('access', 'public')
+            ->select('id', 'title', 'language', 'expiration', 'created_at', 'url', 'user_id')
+            ->orderBy('id','desc')
+            ->get();
+
+        return view('pastes.index', [
+            'pastes' => $pastes
+        ]);
+    }
+    
     public function create()
     {
         $languages = Language::query()
