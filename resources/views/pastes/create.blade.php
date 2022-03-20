@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="pt-18">
-        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto py-12">
             <div class="bg-white overflow-hidden shadow-lg rounded-lg">
                 <form action="{{ route('paste.store') }}" method="post" enctype="multipart/form">
                     @csrf

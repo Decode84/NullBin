@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="pt-18">
-        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto py-12">
             @if (session('key'))
             <div class="p-4 mb-4 text-sm text-gray-700 bg-gray-100 rounded-lg dark:bg-gray-700 dark:text-gray-300"
                 role="alert">
@@ -8,7 +8,6 @@
             </div>
             @endif
             <form action="{{ route('paste.decrypt', $paste->url) }}" method="POST">
-                @method('patch')
                 @csrf
                 <div class="bg-white overflow-hidden shadow-lg rounded-lg">
                     <div class="px-4 py-5 sm:px-6">
@@ -50,11 +49,13 @@
                                 class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">{{ $paste->content }}</textarea>
                             @endif
                         </div>
+                        @if (!session('decrypt'))
                         <div class="py-2">
                             <label for="key" class="block text-sm font-medium text-gray-700">Key</label>
                             <div class="flex items-center">
                                 <input name="key" type="password"
-                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">                            </div>
+                                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            </div>
                         </div>
                         <div class="py-4">
                             <button type="submit"
@@ -68,6 +69,7 @@
                                 </svg>
                             </button>
                         </div>
+                        @endif
                     </div>
                 </div>
             </form>
