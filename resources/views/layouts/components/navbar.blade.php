@@ -20,7 +20,7 @@
                     @endguest
                     @auth
                     <p class="text-gray-200 inline-flex items-center px-1 pt-1 text-sm font-medium">Logged in as: <span
-                            class="text-red-600 ml-2">{{ Auth::user()->username }}</span></p>
+                            class="text-sky-600 ml-2"><a href="{{ route('profile.show', Auth::user()) }}">{{ Auth::user()->username }}</a></span></p>
                     <a href="{{ route('auth.logout') }}"
                         onclick="event.preventDefault(); document.getElementById('frm-logout').submit();"
                         class="text-gray-200 inline-flex items-center px-1 pt-1 text-sm font-medium">Logout</a>

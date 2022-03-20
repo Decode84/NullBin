@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RegistrationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PasteController;
+use App\Http\Controllers\ProfileController;
 
 // Authentication & Register
 Route::get('login', [AuthenticationController::class, 'create'])->name('auth.login');
@@ -15,6 +16,7 @@ Route::post('register', [RegistrationController::class, 'store'])->name('auth.st
 
 Route::post('logout', [AuthenticationController::class, 'destroy'])->name('auth.logout');
 
+Route::get('/public', [PasteController::class, 'index'])->name('paste.index');
 
 Route::get('/u/{user}', [ProfileController::class, 'show'])->name('profile.show');
 
