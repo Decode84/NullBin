@@ -13,8 +13,6 @@
                             </div>
                         </div>
                         <div class="flex items-center">
-                            <a href="#" class="text-sm mr-4">Report</a>
-                            <a href="#" class="text-sm">Send message</a>
                         </div>
                     </div>
                 </div>
