@@ -7,9 +7,9 @@
     <title>Document</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body class="bg-gray-100">
+<body>
     @include('layouts.components.navbar')
-    <main>
+    <main class="bg-gray-100 min-h-screen">
         {{ $slot }}
     </main>
 </body>

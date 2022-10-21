@@ -10,39 +10,39 @@
                             </div>
                             <div class="flex flex-col">
                                 <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                                    <div class="inline-block py-2 min-w-full sm:px-6 lg:px-8">
-                                        <div class="overflow-hidden">
-                                            <table class="min-w-full">
-                                                <thead class="">
-                                                    <tr>
-                                                        <th scope="col"
-                                                            class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                                                            Title
-                                                        </th>
-                                                        <th scope="col"
-                                                            class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                                                            language
-                                                        </th>
-                                                        <th scope="col"
-                                                            class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                                                            expiration
-                                                        </th>
-                                                        <th scope="col"
-                                                            class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                                                            created
-                                                        </th>
-                                                        <th scope="col"
-                                                            class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                                                            Author
-                                                        </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($pastes as $paste)
+                                    <div class="inline-block py-2 min-w-full sm:px-6 lg:px-8 overflow-hidden">
+                                        <table class="min-w-full">
+                                            <thead class="">
+                                                <tr>
+                                                    <th scope="col"
+                                                        class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                        Title
+                                                    </th>
+                                                    <th scope="col"
+                                                        class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                        language
+                                                    </th>
+                                                    <th scope="col"
+                                                        class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                        expiration
+                                                    </th>
+                                                    <th scope="col"
+                                                        class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                        created
+                                                    </th>
+                                                    <th scope="col"
+                                                        class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                        Author
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($pastes as $paste)
                                                     <tr class="bg-white border-b">
                                                         <td
                                                             class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
-                                                            <a href="{{ route('paste.show', $paste->url) }}">{{ $paste->title }}</a>
+                                                            <a
+                                                                href="{{ route('paste.show', $paste->url) }}">{{ $paste->title }}</a>
                                                         </td>
                                                         <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
                                                             {{ $paste->language }}
@@ -54,13 +54,14 @@
                                                             {{ $paste->created_at->diffForHumans() }}
                                                         </td>
                                                         <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
-                                                            <a href="{{ route('profile.show', $paste->user->username )}}">{{ $paste->user->username }}</a>
+                                                            <a
+                                                                href="{{ route('profile.show', $paste->user->username) }}">{{ $paste->user->username }}</a>
                                                         </td>
                                                     </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+
                                     </div>
                                 </div>
                             </div>

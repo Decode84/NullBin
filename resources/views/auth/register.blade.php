@@ -7,7 +7,7 @@
                     <div class="flex flex-col">
                         <h1 class="text-xl mb-4">Account registration</h1>
 
-                        <label type="text" class="text-gray-800 text-sm mb-2" for="">Username</label>
+                        <label class="text-gray-800 text-sm mb-2" for="">Username</label>
                         <input name="username" type="text"
                             class="rounded border border-gray-200 text-gray-800 bg-gray-50 focus:outline-none px-2 py-1">
 
