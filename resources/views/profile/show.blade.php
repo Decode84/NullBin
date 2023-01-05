@@ -32,36 +32,44 @@
                                                 <table class="min-w-full">
                                                     <thead class="">
                                                         <tr>
-                                                            <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                            <th scope="col"
+                                                                class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                                 Title
                                                             </th>
-                                                            <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                            <th scope="col"
+                                                                class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                                 language
                                                             </th>
-                                                            <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                            <th scope="col"
+                                                                class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                                 expiration
                                                             </th>
-                                                            <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                            <th scope="col"
+                                                                class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                                 created
                                                             </th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         @foreach ($pastes as $item)
-                                                        <tr class="bg-white border-b">
-                                                            <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
-                                                                {{ $item->title }}
-                                                            </td>
-                                                            <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
-                                                                {{ $item->language }}
-                                                            </td>
-                                                            <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
-                                                                {{ $item->expiration->diffForHumans() }}
-                                                            </td>
-                                                            <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
-                                                                {{ $item->created_at->diffForHumans() }}
-                                                            </td>
-                                                        </tr>
+                                                            <tr class="bg-white border-b">
+                                                                <td
+                                                                    class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
+                                                                    {{ $item->title }}
+                                                                </td>
+                                                                <td
+                                                                    class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
+                                                                    {{ $item->language }}
+                                                                </td>
+                                                                <td
+                                                                    class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
+                                                                    {{ $item->expiration->diffForHumans() }}
+                                                                </td>
+                                                                <td
+                                                                    class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
+                                                                    {{ $item->created_at->diffForHumans() }}
+                                                                </td>
+                                                            </tr>
                                                         @endforeach
                                                     </tbody>
                                                 </table>

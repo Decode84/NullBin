@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthenticationController;
 use App\Http\Controllers\Auth\RegistrationController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PasteController;
@@ -22,6 +23,10 @@ Route::get('/u/{user}', [ProfileController::class, 'show'])->name('profile.show'
 
 // Generic sites
 Route::get('about', [PageController::class, 'about'])->name('page.about');
+
+Route::controller(CommentController::class)->group(function () {
+    Route::post('comments', 'CommentController@store');
+});
 
 // Paste
 Route::controller(PasteController::class)->group(function () {

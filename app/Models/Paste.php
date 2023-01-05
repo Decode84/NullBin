@@ -3,13 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Paste extends Model
 {
-    const ACCESS_PULBIC = 'public';
-    const ACCESS_UNLISTED = 'unlisted';
-    const ACCESS_PRIVATE = 'private';
-
     protected $fillable = [
         'title',
         'author',
@@ -18,13 +15,15 @@ class Paste extends Model
         'expiration',
         'content',
         'user_id',
+        'is_encrypted',
+        'visibility',
     ];
 
     protected $dates = [
         'expiration',
     ];
 
-     /**
+    /**
      * Get the route key for the model.
      *
      * @return string
@@ -44,18 +43,17 @@ class Paste extends Model
         return "/{$this->url}/";
     }
 
-    static public function accessStates()
+    public function scopeWhereVisibility(Builder $query, $visibility)
     {
-        return [
-            self::ACCESS_PULBIC,
-            self::ACCESS_UNLISTED,
-            self::ACCESS_PRIVATE
-        ];
+        return $query->where('visibility', $visibility);
     }
 
-    public function scopePublic($query)
+    public function scopeWhereExpired(Builder $query)
     {
-        return $query->where('access', self::ACCESS_PULBIC);
+        return $query->where(function ($query) {
+            $query->whereNull('expiration')
+                ->orWhere('expiration', '>', now());
+        });
     }
 
     /**
@@ -76,5 +74,10 @@ class Paste extends Model
     public function language()
     {
         return $this->hasOne(Language::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

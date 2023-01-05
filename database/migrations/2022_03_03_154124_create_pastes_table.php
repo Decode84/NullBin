@@ -23,7 +23,9 @@ return new class extends Migration
             $table->text('content');
             $table->uuid('url')->unique();
             $table->foreignId('user_id')->nullable();
-            $table->enum('access', ['public', 'unlisted', 'private']);
+            $table->string('visibility')->default('public');
+            $table->boolean('is_encrypted')->default(false);
+            // $table->enum('access', ['public', 'unlisted', 'private']);
             $table->timestamps();
         });
     }

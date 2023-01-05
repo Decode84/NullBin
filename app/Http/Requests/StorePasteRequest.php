@@ -27,7 +27,9 @@ class StorePasteRequest extends FormRequest
             'title' => 'max:120|nullable',
             'author' => 'max:120|nullable',
             'content' => 'max:65523|required',
-            // 'access' => 'required|in:public,unlisted,private',
+            // 'language' => 'required|exists:languages,id',
+            // 'expiration' => 'required|in:never,5min,10min,1hour,1day,1week,1month,1year',
+            // 'visibility' => 'required|in:public,unlisted,private',
         ];
     }
 }

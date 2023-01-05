@@ -12,22 +12,26 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Requests\StorePasteRequest;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\DecryptPasteRequest;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class PasteController
 {
+    use AuthorizesRequests;
+
     public function index()
     {
         $pastes = Paste::query()
-            ->where('access', 'public')
+            ->whereVisibility('public')
+            ->whereExpired()
             ->select('id', 'title', 'language', 'expiration', 'created_at', 'url', 'user_id')
-            ->orderBy('id','desc')
+            ->orderBy('id', 'desc')
             ->get();
 
         return view('pastes.index', [
             'pastes' => $pastes
         ]);
     }
-    
+
     public function create()
     {
         $languages = Language::query()
@@ -41,56 +45,56 @@ class PasteController
 
     public function show(Paste $paste)
     {
+        $this->authorize('view', $paste);
+
+        // Get the comments for the paste
+        $comments = $paste->comments;
+
         Session::get('key');
 
-        /*
-        if($paste->access == Paste::ACCESS_PRIVATE)
-        {
-            abort(404);
-        }
-        */
-
-        if($paste->expiration <= Carbon::now())
-        {
+        if ($paste->expiration <= Carbon::now()) {
             abort(404);
         }
 
         return view('pastes.show', [
-            'paste' => $paste
+            'paste' => $paste,
+            'comments' => $comments
         ]);
     }
 
     public function store(StorePasteRequest $request)
     {
-        switch ($request->input('expire')) {
-            case '5':
-                $expiration = Carbon::now()->addMinutes(5);
-                break;
-            case '10':
-                $expiration = Carbon::now()->addMinutes(10);
-                break;
-            case '30':
-                $expiration = Carbon::now()->addMinutes(30);
-                break;
-            case '60':
-                $expiration = Carbon::now()->addHour();
-                break;
-            case '1d':
-                $expiration = Carbon::now()->addDay();
-                break;
-            case '1w':
-                $expiration = Carbon::now()->addWeek();
-                break;
+
+        if ($request->input('encrypt')) {
+            // Random generate a key
+            $key = random_bytes(32);
+
+            // Get the cipher
+            $encrypter = new Encrypter($key, 'AES-256-CBC');
+
+            // Encrypt the original plaintext
+            $encrypted_content = $encrypter->encryptString($request->content);
+
+            // Display the key in hexadecimal format in the session
+            $key2 = bin2hex($key);
+
+            $is_encrypted = true;
+        } else {
+            $encrypted_content = $request->content;
+            $key2 = null;
+            $is_encrypted = false;
         }
 
-        // Random generate a key
-        $key = random_bytes(32);
+        $expiration_values = [
+            '5' => Carbon::now()->addMinutes(5),
+            '10' => Carbon::now()->addMinutes(10),
+            '30' => Carbon::now()->addMinutes(30),
+            '60' => Carbon::now()->addHour(),
+            '1d' => Carbon::now()->addDay(),
+            '1w' => Carbon::now()->addWeek(),
+        ];
 
-        // Get the cipher
-        $encrypter = new Encrypter($key, 'AES-256-CBC');
-
-        // Encrypt the original plaintext
-        $encrypted_content = $encrypter->encryptString($request->content);
+        $expiration = $expiration_values[$request->input('expire')];
 
         $paste = Paste::create([
             'title'             => $request->input('title') ?? Str::random(10),
@@ -101,14 +105,12 @@ class PasteController
             'created_at'        => Carbon::now(),
             'url'               => Str::uuid(),
             'user_id'           => Auth::user()->id ?? '1', // 1 = anon account
-            // 'access'            => $request->input(['access']),
+            'visibility'        => $request->visibility,
+            'is_encrypted'      => $is_encrypted,
         ]);
 
-        // Display the key in hexadecimal format in the session
-        $key2 = bin2hex($key);
-
         // Redirect to the path with key in a session
-        return redirect($paste->path())->with(['key' => $key2]);
+        return redirect($paste->path())->with(['key' => $key2, 'key_displayed' => $is_encrypted]);
     }
 
     public function decrypt(Paste $paste, DecryptPasteRequest $request)
