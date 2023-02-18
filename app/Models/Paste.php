@@ -19,7 +19,7 @@ class Paste extends Model
         'visibility',
     ];
 
-    protected $dates = [
+    protected $casts = [
         'expiration',
     ];
 
