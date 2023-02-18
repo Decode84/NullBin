@@ -7,13 +7,13 @@
     <title>Document</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
-    @inertiaHead
+
 </head>
 <body>
     @include('layouts.components.navbar')
     <main class="bg-gray-100 min-h-screen">
         {{ $slot }}
     </main>
-    @inertia
+
 </body>
 </html>
