@@ -3,7 +3,7 @@
 Nullbin is a text/code storage website designed to offer text or code storage without compromising privacy and security. The website is still under heavy development and changes are constantly being made. 
 
 [![License](https://img.shields.io/badge/License-MIT-6067e2)](#license)
-[![GitHub issue](https://img.shields.io/github/issues/KB885/NullBin?include_prereleases=&sort=semver&color=6067e2)](https://github.com/KB885/NullBin/issues/)
+[![GitHub issue](https://img.shields.io/github/issues/k2cn/NullBin?include_prereleases=&sort=semver&color=6067e2)](https://github.com/k2cn/NullBin/issues/)
 
 ## Features
 
@@ -26,7 +26,7 @@ The choice for open-source is to be transparent with how the data is processed a
 Clone the git down to your desired folder.
 
 ```shell
-git clone https://github.com/KB885/NullBin.git
+git clone https://github.com/k2cn/NullBin.git
 ```
 
 `cd` into the folder and install the needed libraries for laravel.
