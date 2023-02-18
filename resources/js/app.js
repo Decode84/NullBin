@@ -1,7 +1,14 @@
 import './bootstrap';
 
-import Alpine from 'alpinejs'
 import hljs from 'highlight.js';
+import { createInertiaApp } from '@inertiajs/svelte'
 
-window.Alpine = Alpine
-Alpine.start()
+createInertiaApp({
+  resolve: name => {
+    const pages = import.meta.glob('./Pages/**/*.svelte', { eager: true })
+    return pages[`./Pages/${name}.svelte`]
+  },
+  setup({ el, App, props }) {
+    new App({ target: el, props })
+  },
+})
