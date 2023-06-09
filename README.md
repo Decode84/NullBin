@@ -1,66 +1,36 @@
-# NullBin 🔒
+<p align="center">
+  <h3 align="center">NullBin 🔒</h3>
+  <p align="center">
+    A secure harbor for your text and code snippets.
+    <br>
+    <a href="https://github.com/decode84/NullBin/issues/new?template=bug_report.md">Report Bug</a>
+    ·
+    <a href="https://github.com/decode84/NullBin/issues/new?template=feature_request.md">Request Feature</a>
+  </p>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/License-MIT-6067e2" alt="License">
+  <img src="https://img.shields.io/github/issues/k2cn/NullBin?include_prereleases=&sort=semver&color=6067e2" alt="Issues">
+</p>
  
-Nullbin is a text/code storage website designed to offer text or code storage without compromising privacy and security. The website is still under heavy development and changes are constantly being made. 
+## 🚀 About NullBin
 
-[![License](https://img.shields.io/badge/License-MIT-6067e2)](#license)
-[![GitHub issue](https://img.shields.io/github/issues/k2cn/NullBin?include_prereleases=&sort=semver&color=6067e2)](https://github.com/k2cn/NullBin/issues/)
+NullBin is an open-source platform that provides a secure and private environment for storing text or code snippets. Born as a pastebin alternative, NullBin pays special attention to the anonymity and security of the stored data. The project is a work in progress, continuously striving to enhance its offerings. 
 
-## Features
+## 💼 Features
 
-- Paste expiration [5 min, 10, min, 30 min, 60 min, 1 day, 1 week]
-- Pastes are Encrypted with `AES-256-CBC` from a random generated key.
-- Pastes Decryption Key only shown once.
-- Pastes are Decrypted in a session.
+- Time-Limited Paste: Set an expiration time for your pastes [5 min, 10 min, 30 min, 60 min, 1 day, 1 week].
+- Robust Encryption: Pastes are encrypted with AES-256-CBC using a randomly generated key.
+- Decryption Key: Each paste's decryption key is shown only once.
+- Session-Based Decryption: Pastes are decrypted within a session.
 
-## Overview
+## 🌐 Overview
 
-The general purpose of the website is to offer an alternative to pastebin. With more focus on not knowing the data that is stored in the database during the time that the paste or snippet is set to be active. When the paste or snippet is no longer active, it should be deleted. 
+NullBin aims to provide a safe and private alternative for storing text and code snippets. We ensure the data remains anonymous during its lifetime. Post expiration, it is permanently deleted from the database.
 
-The choice for open-source is to be transparent with how the data is processed and how the service is set up. This is to reassure those who might want to use the service or offer code for the project themselves.
+Embracing open-source, we maintain transparency in data processing and service setup. We welcome contributors and users who wish to understand our service better or contribute to its development.
 
-![The website](https://i.imgur.com/edyQJT6.png "site")
-![The website](https://i.imgur.com/0D6PnOp.png "site")
-
-## Installation and usage
-
-Clone the git down to your desired folder.
-
-```shell
-git clone https://github.com/k2cn/NullBin.git
-```
-
-`cd` into the folder and install the needed libraries for laravel.
-
-```shell
-composer install
-```
-
-Edit the `.env` file and set the newly created database, after you have re-named.
-
-```shell
-cp .env.example .env
-```
-
-Generate a new `APP_KEY` for your project.
-
-```shell
-php artisan key:generate
-```
-
-Install the needed frontend libs. eg. Tailwindcss.
-
-```shell
-npm install
-```
-
-Compile the needed frontend
-
-```shell
-npm run dev
-
-// Or
-
-npm run prod
-```
-
-
+<p align="center">
+    <img src="https://i.imgur.com/edyQJT6.png" width="900" alt="site">
+</p>
